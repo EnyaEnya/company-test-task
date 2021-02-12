@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Tatyana" id="add-company-table">
+
+        <createTable tableName="company">
+            <column autoIncrement="true" name="id" type="bigserial">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="bill" type="bigint"/>
+        </createTable>
+
+        <createTable tableName="invoice">
+            <column autoIncrement="true" name="id" type="bigserial">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="date" type="timestamp"/>
+            <column name="amount" type="bigint"/>
+            <column name="client_name" type="text"/>
+            <column name="status" type="text"/>
+            <column name="type" type="text"/>
+        </createTable>
+
+        <createTable tableName="invoice_material">
+            <column autoIncrement="true" name="id" type="bigserial">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="invoice_id" type="bigint"/>
+            <column name="material_id" type="bigint"/>
+            <column name="quantity" type="double"/>
+            <column name="price" type="bigint"/>
+        </createTable>
+
+        <createTable tableName="invoice_product">
+            <column autoIncrement="true" name="id" type="bigserial">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="invoice_id" type="bigint"/>
+            <column name="product_id" type="bigint"/>
+            <column name="quantity" type="double"/>
+            <column name="price" type="bigint"/>
+        </createTable>
+
+        <createTable tableName="material">
+            <column autoIncrement="true" name="id" type="bigserial">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="text"/>
+            <column name="price" type="bigint"/>
+            <column name="measure_id" type="bigint"/>
+        </createTable>
+
+        <createTable tableName="product">
+            <column autoIncrement="true" name="id" type="bigserial">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="text"/>
+            <column name="price" type="bigint"/>
+            <column name="measure_id" type="bigint"/>
+        </createTable>
+
+        <createTable tableName="product_material">
+            <column name="product_id" type="bigint"/>
+            <column name="material_id" type="bigint"/>
+        </createTable>
+
+        <createTable tableName="measure">
+            <column autoIncrement="true" name="id" type="bigserial">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="text"/>
+        </createTable>
+
+        <createTable tableName="storage">
+            <column autoIncrement="true" name="id" type="bigserial">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="material_id" type="bigint"/>
+            <column name="quantity" type="double"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="invoice_id"
+                                 baseTableName="invoice_product"
+                                 constraintName="fk_invoice_product_invoice_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="invoice"/>
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="invoice_product"
+                                 constraintName="fk_invoice_product_product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"/>
+
+        <addForeignKeyConstraint baseColumnNames="invoice_id"
+                                 baseTableName="invoice_material"
+                                 constraintName="fk_invoice_material_invoice_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="invoice"/>
+
+        <addForeignKeyConstraint baseColumnNames="material_id"
+                                 baseTableName="invoice_material"
+                                 constraintName="fk_invoice_material_material_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="material"/>
+
+        <addForeignKeyConstraint baseColumnNames="measure_id"
+                                 baseTableName="product"
+                                 constraintName="fk_product_measure_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="measure"/>
+
+        <addForeignKeyConstraint baseColumnNames="measure_id"
+                                 baseTableName="material"
+                                 constraintName="fk_material_measure_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="measure"/>
+
+        <addForeignKeyConstraint baseColumnNames="material_id"
+                                 baseTableName="storage"
+                                 constraintName="fk_storage_material_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="material"/>
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="product_material"
+                                 constraintName="fk_product_material_product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"/>
+
+        <addForeignKeyConstraint baseColumnNames="material_id"
+                                 baseTableName="product_material"
+                                 constraintName="fk_product_material_material_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="material"/>
+
+
+
+    </changeSet>
+
+</databaseChangeLog>
