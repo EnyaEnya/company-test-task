@@ -1,8 +1,8 @@
 package com.example.company.service;
 
-import com.example.company.dao.ProductRepository;
 import com.example.company.dto.ProductDto;
 import com.example.company.entity.Product;
+import com.example.company.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,9 @@
 package com.example.company.controller;
 
-import com.example.company.dao.MaterialRepository;
 import com.example.company.dto.MaterialDto;
 import com.example.company.entity.Material;
 import com.example.company.exception.ResourceNotFoundException;
+import com.example.company.repository.MaterialRepository;
 import com.example.company.service.MaterialService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

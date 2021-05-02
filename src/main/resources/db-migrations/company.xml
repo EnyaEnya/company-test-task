@@ -137,8 +137,13 @@
                                  referencedColumnNames="id"
                                  referencedTableName="material"/>
 
+    </changeSet>
 
-
+    <changeSet author="Tatyana" id="fix-up-storage-table">
+        <dropPrimaryKey tableName="storage" constraintName="storage_pkey"/>
+        <addPrimaryKey tableName="storage" columnNames="material_id"/>
+        <dropColumn tableName="storage" columnName="id"/>
+        <renameTable oldTableName="storage" newTableName="storage_item"/>
     </changeSet>
 
 </databaseChangeLog>
