@@ -1,28 +1,23 @@
 package com.example.company.exception;
 
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.time.Instant;
+
+
+@Getter
+@Setter
 public class ErrorDetails {
-    private Date timestamp;
+    private Instant timestamp;
     private String message;
     private String details;
 
-    public ErrorDetails(Date timestamp, String message, String details) {
+    public ErrorDetails(Instant timestamp, String message, String details) {
         super();
         this.timestamp = timestamp;
         this.message = message;
         this.details = details;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public String getDetails() {
-        return details;
-    }
 }

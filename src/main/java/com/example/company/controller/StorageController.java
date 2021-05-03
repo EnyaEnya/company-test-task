@@ -1,10 +1,11 @@
 package com.example.company.controller;
 
-import com.example.company.dto.StorageDto;
-import com.example.company.entity.StorageItem;
-import com.example.company.repository.StorageRepository;
+import com.example.company.dto.StorageItemDto;
+import com.example.company.exception.ResourceNotFoundException;
+import com.example.company.logging.Log;
 import com.example.company.service.StorageService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -15,17 +16,34 @@ import java.util.List;
 @AllArgsConstructor
 public class StorageController {
 
-    private final StorageRepository storageRepository;
-
     private final StorageService storageService;
 
     @GetMapping
-    public List<StorageItem> getAllMaterialsOnStorage() {
-        return storageRepository.findAll();
+    public List<StorageItemDto> getAllStorageData() {
+        return storageService.getAllStorageData();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<StorageItemDto> getStorageItemById(@PathVariable(value = "id") Long storageItemId) throws ResourceNotFoundException {
+        return storageService.getItemById(storageItemId);
+    }
+
+    @Log
     @PostMapping
-    public StorageItem createMaterial(@Valid @RequestBody StorageDto storageDto) {
-        return storageService.create(storageDto);
+    public StorageItemDto createStorageItem(@Valid @RequestBody StorageItemDto storageItemDto) {
+        return storageService.createStorageItem(storageItemDto);
+    }
+
+    @Log
+    @PutMapping("/{id}")
+    public ResponseEntity<StorageItemDto> updateStorageItem(@PathVariable(value = "id") Long storageItemId,
+                                                            @Valid @RequestBody StorageItemDto storageItemDto) throws ResourceNotFoundException {
+        return storageService.updateStorageItem(storageItemId, storageItemDto);
+    }
+
+    @Log
+    @DeleteMapping("/{id}")
+    public void deleteStorageItem(@PathVariable(value = "id") Long storageItemId) throws ResourceNotFoundException {
+        storageService.deleteStorageItem(storageItemId);
     }
 }

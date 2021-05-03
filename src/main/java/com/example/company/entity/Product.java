@@ -24,23 +24,12 @@ public class Product extends AbstractEntity {
     @Column(name = "measure_id")
     private Long measureId;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @SortNatural
     @JoinTable(name = "product_material",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "material_id"))
     private SortedSet<Material> materials;
-
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "name='" + name + '\'' +
-                ", price=" + price +
-                ", measureId=" + measureId +
-                ", materials=" + materials +
-                '}';
-    }
 
     @Override
     public int hashCode() {
